@@ -1,6 +1,6 @@
 Technology: Postgre, Docker
 
-**Docker commands:** ```
+**Docker commands:**
 ```docker
 docker run --name pgrs -e POSTGRES_PASSWORD=postgres -p 5432:5432
 ```
