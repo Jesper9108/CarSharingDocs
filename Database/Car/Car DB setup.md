@@ -13,19 +13,19 @@ docker exec -ti pgrs psql -U postgres
 **Postgre setup:**
 
 - Creating database (then connecting to it via \\c)
-```Postgre
+```SQL
 CREATE DATABASE car;
 ```
 
 - Creating **cars** table
 
 brand enum creation
-```Postgre
+```SQL
 CREATE TYPE brand_enum AS ENUM ('Volkswagen', 'Skoda', 'Renault');
 ```
 
 table creation
-```Postgre
+```SQL
 CREATE TABLE cars (
 	numberplate VARCHAR(10) PRIMARY KEY,
 	brand brand_enum,
@@ -35,13 +35,13 @@ CREATE TABLE cars (
 ```
 
 - Inserting to **cars** table
-```Postgre
+```SQL
 INSERT INTO cars (numberplate, brand, service_begin)
 VALUES ('ABC123', 'Volkswagen', CURRENT_DATE);
 ```
 
 - Changing constraint
-```Postgre
+```SQL
 ALTER TABLE cars DROP CONSTRAINT numberplate_format;
 
 ALTER TABLE cars ADD CONSTRAINT numberplate_format CHECK (numberplate ~* '\b[a-zA-Z]{3,4}\d{3}\b');
@@ -50,7 +50,7 @@ ALTER TABLE cars ADD CONSTRAINT numberplate_format CHECK (numberplate ~* '(?<!.)
 ```
 
 - Random values
-```Postgre
+```SQL
 INSERT INTO cars (numberplate, brand, service_begin)
 VALUES
 ('ABC123', 'Volkswagen', CURRENT_DATE),
@@ -109,4 +109,10 @@ VALUES
 ('OPQ567', 'Renault', CURRENT_DATE),  
 ('STU890', 'Renault', CURRENT_DATE),  
 ('HIJ678', 'Renault', CURRENT_DATE);
+```
+
+- Checking the number of cars grouped by the length of numberplates
+```SQL
+SELECT COUNT(numberplate) as "NUMBER OF CARS", LENGTH(numberplate) as "CHARACTERS IN NUMBERPLATE" FROM cars GROUP BY(LENGTH(numberpl
+ate));
 ```
